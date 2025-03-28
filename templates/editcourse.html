@@ -1,0 +1,34 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- Bootstrap JS (for interactive components like modals, dropdowns) -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Add course</h2>
+
+    <form action="{% url 'updatecourse_page' %}" method="post" enctype="multipart/form-data" class="p-4 border rounded shadow-lg">
+
+        {% csrf_token %} <!-- For Django CSRF protection -->
+
+
+        <!-- Last Name -->
+        <div class="mb-3">
+            <label for="course-name" class="form-label">Course name</label>
+            <input type="text" class="form-control" id="course-name" name="course_name"  value="{{course.name}}" placeholder="choose your course" required>
+             <input id="course_id" name="course_id" type="text" class="form-control" value="{{course.id}}" hidden>
+
+        </div>
+
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn btn-primary w-100">Submit</button>
+
+    </form>
+</div>
+
+
+{% endblock %}

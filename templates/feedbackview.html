@@ -1,0 +1,86 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+<style>
+  .modal {
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.4);
+  }
+  .modal-content {
+    background-color: #fff;
+    margin: 15% auto;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+  }
+  .close {
+    float: right;
+    font-size: 28px;
+    cursor: pointer;
+  }
+</style>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">table</h2>
+
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="table-primary">
+
+            <tr>
+
+                <th>ID</th>
+                <th>Name</th>
+                <th>Feedback</th>
+                <th>Date</th>
+                <th>Action</th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+
+
+       {% for i in feedback %}
+   <tr>
+       <th scope="row">{{ i.id }}</th>
+       <td><div class="d-flex align-items-center">
+
+<span>{{ i.staff_id.admin.first_name }} {{ i.staff_id.admin.last_name }}</span>
+</div>
+</td>
+        <td>{{ i.feedback }}</td>
+        <td>{{ i.created_at|date:"d M Y h:i A" }}</td>
+
+       <td>
+           <button class="btn btn-success openModalBtn2" data-modal-id="myModal2-{{ i.id }}">Reply</button>
+           <div id="myModal2-{{ i.id }}" class="modal" style="display: none;">
+          <div class="modal-content">
+            <span class="close" onclick="closeModal('myModal2-{{ i.id }}')">&times;</span>
+            <h2>Reply</h2>
+            <form onsubmit="sendReply('{{ i.id }}'); return false;" action="{% url 'feedbacksave_page' %}">
+                 {% csrf_token %}
+                <input type="hidden" name="feedback_id" value="{{ i.id }}">
+
+              <input type="text" name="feedback_reply" placeholder="Enter your reply" />
+              <button type="submit">Send Reply</button>
+            </form>
+          </div>
+        </div>
+
+
+
+       </td>
+
+   </tr>
+{% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+{% endblock %}

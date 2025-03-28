@@ -1,0 +1,41 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">table</h2>
+
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="table-primary">
+
+            <tr>
+
+                <th>ID</th>
+                <th>session_start</th>
+                <th>session_end</th>
+
+
+
+            </tr>
+        </thead>
+        <tbody>
+
+
+        {% for i in session %}
+
+            <tr>
+
+                 <th scope="row">{{ i.id }}</th>
+                <td>{{ i.session_start|date:"d-m-y" }}</td>
+                <td>{{ i.session_end|date:"d-m-y" }}</td>
+                <td> <a href="{% url 'editsession_page' i.id  %}"class="btn btn-warning btn-sm">Edit</a>
+                      <a href="{% url 'deletesession_page' i.id  %}" class="btn btn-danger btn-sm">Delete</a>
+</td>
+            </tr>
+
+        {% endfor %}
+        </tbody>
+
+    </table>
+
+</div>
+{% endblock %}

@@ -1,0 +1,96 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+<style>
+     .notification {
+            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            animation: fadeInOut 4s ease forwards;
+        }
+
+        @keyframes fadeInOut {
+            0% { opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { opacity: 0; }
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 2000;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            margin: 15% auto;
+            text-align: center;
+        }
+</style>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">table</h2>
+
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="table-primary">
+
+            <tr>
+
+                <th>Name</th>
+                <th>Email</th>
+                <th>action</th>
+
+
+            </tr>
+        </thead>
+        <tbody>
+
+
+        {% for i in staff %}
+
+            <tr>
+                <td>{{ i.admin.first_name }} {{ i.admin.last_name }}</td>
+                <td>{{ i.admin.email }}</td>
+                 <td> <button type="submit" class="btn btn-primary w-100" onclick="openModal()">Send Notification</button></td>
+
+                  <div id="notification" class="notification">Notification Sent Successfully!</div>
+
+        <div id="myModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <p>Enter your message:  {{ i.admin.last_name }}</p>
+                <form id="notificationForm" action="{% url 'savestaffnotifications_page' %}" method="POST">
+                     {% csrf_token %}
+                    <input type="text" id="notificationInput" placeholder="Type your message..." name="message" required>
+                    <input type="text" name="staff_id" value="{{i.admin.id}}" hidden>
+                    <button type="submit">Submit</button>
+                    <button type="button" onclick="closeModal()">Close</button>
+                </form>
+            </div>
+        </div>
+
+
+
+            </tr>
+
+        {% endfor %}
+        </tbody>
+
+    </table>
+
+</div>
+{% endblock %}

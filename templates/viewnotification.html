@@ -1,0 +1,39 @@
+{% extends 'dashboard.html' %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="text-center mb-4">table</h2>
+
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="table-primary">
+
+            <tr>
+
+                 <th scope="row">Message</th>
+                 <th scope="row">action</th>
+
+
+
+
+            </tr>
+        </thead>
+        <tbody>
+
+
+        {% for i in notification %}
+
+            <tr>
+
+                <td>{{ i.message }}</td>
+                <td><button class="btn btn-danger">Mark as Done</button> </td>
+
+
+            </tr>
+
+        {% endfor %}
+        </tbody>
+
+    </table>
+
+</div>
+{% endblock %}
